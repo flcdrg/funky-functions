@@ -28,15 +28,16 @@ jobs:
     
     - name: Publish
       run: dotnet publish --configuration Release
+      working-directory: src
 
     - name: Upload net3.1
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
           name: net3.1
-          path: net31/bin/Debug/netcoreapp3.1/publish
+          path: src/net31/bin/Release/netcoreapp3.1/publish
 
     - name: Upload net5
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
           name: net5
-          path: net5/bin/Debug/netcoreapp3.1/publish
+          path: src/net50/bin/Release/net5.0/publish
