@@ -29,6 +29,8 @@ stages:
         workingDirectory: 'src'
         projects: './src/funky-functions.sln'
         publishWebProjects: false
+        zipAfterPublish: false
+        modifyOutputPath: false
         arguments: --configuration Release
 
     - task: ArchiveFiles@2
