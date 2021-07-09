@@ -27,7 +27,7 @@ stages:
       inputs:
         command: 'publish'
         workingDirectory: 'src'
-        projects: 'funky-functions.sln'
+        projects: './src/funky-functions.sln'
         publishWebProjects: false
         arguments: --configuration Release
 
