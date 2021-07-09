@@ -80,7 +80,7 @@ stages:
               azureSubscription: '$(azureSubscription)'
               appType: functionApp
               appName: function-net31
-              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId)-net31.zip'
+              package: '$(Pipeline.Workspace)/net31/$(Build.BuildId)-net31.zip'
 
           - task: AzureFunctionApp@1
             displayName: 'Azure functions app deploy net5'
@@ -88,4 +88,4 @@ stages:
               azureSubscription: '$(azureSubscription)'
               appType: functionApp
               appName: function-net5
-              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId)-net50.zip'              
+              package: '$(Pipeline.Workspace)/net50/$(Build.BuildId)-net50.zip'              
