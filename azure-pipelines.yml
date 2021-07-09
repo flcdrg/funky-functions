@@ -1,20 +1,12 @@
-# .NET Core Function App to Windows on Azure
-# Build a .NET Core function app and deploy it to Azure as a Windows function App.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/dotnet-core
-
-trigger:
-- main
+#trigger:
+#- main
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: 'efd51bc3-18b3-4e9a-95d0-608ba6610858'
 
-  # Function app name
-  functionAppName: 'function-net31'
-
   # Agent VM image name
-  vmImageName: 'vs2017-win2016'
+  vmImageName: 'windows-latest'
 
   # Working Directory
   workingDirectory: '$(System.DefaultWorkingDirectory)/src/net31'
@@ -33,22 +25,34 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
-        command: 'build'
-        projects: |
-          $(workingDirectory)/*.csproj
-        arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
+        command: 'publish'
+        workingDirectory: 'src'
+        projects: '*.sln'
+        arguments: --configuration Release
 
     - task: ArchiveFiles@2
-      displayName: 'Archive files'
+      displayName: 'Archive net31'
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/publish_output'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/src/net31/bin/Release/netcoreapp3.1/publish'
         includeRootFolder: false
         archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-net31.zip
         replaceExistingArchive: true
 
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      artifact: drop
+    - task: ArchiveFiles@2
+      displayName: 'Archive net50'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/src/net50/bin/Release/net5.0/publish'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-net50.zip
+        replaceExistingArchive: true
+
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-net31.zip
+      artifact: net31
+
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-net50.zip
+      artifact: net50
 
 - stage: Deploy
   displayName: Deploy stage
@@ -67,10 +71,18 @@ stages:
         deploy:
 
           steps:
-          # - task: AzureFunctionApp@1
-          #   displayName: 'Azure functions app deploy'
-          #   inputs:
-          #     azureSubscription: '$(azureSubscription)'
-          #     appType: functionApp
-          #     appName: $(functionAppName)
-          #     package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+          - task: AzureFunctionApp@1
+            displayName: 'Azure functions app deploy net3.1'
+            inputs:
+              azureSubscription: '$(azureSubscription)'
+              appType: functionApp
+              appName: function-net31
+              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId)-net31.zip'
+
+          - task: AzureFunctionApp@1
+            displayName: 'Azure functions app deploy net5'
+            inputs:
+              azureSubscription: '$(azureSubscription)'
+              appType: functionApp
+              appName: function-net5
+              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId)-net50.zip'              
