@@ -1,15 +1,10 @@
-#trigger:
-#- main
+# Azure Pipeline
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: 'efd51bc3-18b3-4e9a-95d0-608ba6610858'
 
-  # Agent VM image name
   vmImageName: 'windows-latest'
-
-  # Working Directory
-  workingDirectory: '$(System.DefaultWorkingDirectory)/src/net31'
 
 stages:
 - stage: Build
