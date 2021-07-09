@@ -87,5 +87,5 @@ stages:
             inputs:
               azureSubscription: '$(azureSubscription)'
               appType: functionApp
-              appName: function-net5
+              appName: function-net50
               package: '$(Pipeline.Workspace)/net50/$(Build.BuildId)-net50.zip'              
