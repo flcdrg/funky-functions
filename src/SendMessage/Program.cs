@@ -37,7 +37,7 @@ namespace SendMessage
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             var client = new ServiceBusClient(_serviceBusConnectionString);
-            var sender = client.CreateSender("cumber");
+            var sender = client.CreateSender("OfConversation");
             await sender.SendMessageAsync(new ServiceBusMessage($"This is a message: {DateTime.UtcNow.ToString()}"));
 
             Console.WriteLine("Message sent");

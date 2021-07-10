@@ -7,7 +7,10 @@ namespace net31
     public static class ServiceBusQueueTrigger
     {
         [FunctionName("ServiceBusQueueTrigger")]
-        public static void Run([ServiceBusTrigger("cumber", Connection = "ServiceBusConnection")] Message message, ILogger log)
+        public static void Run([ServiceBusTrigger(
+            topicName: "OfConversation", 
+            subscriptionName: "net31",
+            Connection = "ServiceBusConnection")] Message message, ILogger log)
         {
             var body = System.Text.Encoding.UTF8.GetString(message.Body);
             log.LogInformation($"C# ServiceBus queue trigger function processed message: {message.MessageId}");

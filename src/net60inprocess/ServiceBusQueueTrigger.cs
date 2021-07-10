@@ -8,7 +8,10 @@ namespace net60inprocess
     public static class ServiceBusQueueTrigger
     {
         [FunctionName("ServiceBusQueueTrigger")]
-        public static void Run([ServiceBusTrigger("cumber", Connection = "ServiceBusConnection")]string myQueueItem, ILogger log)
+        public static void Run([ServiceBusTrigger(
+            topicName: "OfConversation",
+            subscriptionName: "net6in", 
+            Connection = "ServiceBusConnection")]string myQueueItem, ILogger log)
         {
             log.LogInformation($"C# ServiceBus queue trigger function processed message: {myQueueItem}");
         }
