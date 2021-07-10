@@ -63,8 +63,6 @@ jobs:
   deploy:
       runs-on: ubuntu-latest
       needs: [build]
-      env:
-          FUNC_APP_NAME: blogimagegenerator
 
       steps:
       - name: Download net3.1
