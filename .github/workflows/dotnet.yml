@@ -36,6 +36,15 @@ jobs:
       run: dotnet publish --configuration Release
       working-directory: src
 
+    - name: List net5
+      run: ls -al src/net50/bin/Release/net5.0/publish
+
+    - name: List net6 in-process
+      run: ls -al src/net60inprocess/bin/Release/net6.0/publish
+
+    - name: List net6 out-of-process
+      run: ls -al src/net60outofprocess/bin/Release/net6.0/publish
+
     - name: Upload net3.1
       uses: actions/upload-artifact@v2
       with:
@@ -114,7 +123,7 @@ jobs:
         uses: Azure/functions-action@v1.3.2
         with:
             app-name: 'function-net60in'
-            package: net5
+            package: net6in
             publish-profile: ${{ secrets.PUBLISH_PROFILE_NET60_IN }}
 
       - name: Deploy net6 out-of-process
