@@ -18,7 +18,7 @@ namespace net60outofprocess
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-            response.WriteString("Welcome to Azure Functions!");
+            response.WriteString("Welcome to Azure Functions .NET 6 out-of-process. !");
 
             return response;
         }
