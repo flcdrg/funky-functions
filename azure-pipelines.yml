@@ -18,6 +18,14 @@ stages:
       vmImage: $(vmImageName)
 
     steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET 6 Preview'
+      inputs:
+        packageType: sdk
+        version: 6.x
+        includePreviewVersions: true
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
