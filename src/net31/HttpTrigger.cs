@@ -26,7 +26,7 @@ namespace net31
             name = name ?? data?.name;
 
             string responseMessage = string.IsNullOrEmpty(name)
-                ? "Azure Function .NET 3.1"
+                ? "Azure Function .NET 3.1 - 20210711T1806"
                 : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
             return new OkObjectResult(responseMessage);
