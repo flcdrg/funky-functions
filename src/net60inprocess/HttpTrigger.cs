@@ -12,6 +12,16 @@ namespace net60inprocess
 {
     public static class HttpTrigger
     {
+        // C# 10 feature
+        const string myRootPath = "/src/to/my/root";
+        const string myWholeFilePath = $"{myRootPath}/README.md";
+
+        // C# 10 feature
+        record struct Thing
+        {
+            public string Name { get; set; }
+        }
+
         [FunctionName("HttpTrigger")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
