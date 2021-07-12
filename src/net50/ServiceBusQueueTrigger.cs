@@ -10,7 +10,7 @@ namespace net50
         public static void Run([ServiceBusTrigger(
             topicName: "OfConversation",
             subscriptionName: "net5",
-            Connection = "ServiceBusConnection")] string myQueueItem, FunctionContext context)
+            Connection = "ServiceBusConnection")] string myQueueItem, FunctionContext context) // ServiceBusReceivedMessage
         {
             var logger = context.GetLogger("ServiceBusQueueTrigger");
             logger.LogInformation($"C# ServiceBus queue trigger function processed message: {myQueueItem}");
