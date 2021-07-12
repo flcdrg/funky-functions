@@ -13,6 +13,7 @@ namespace net50
         [OpenApiOperation("demo", "demo", Summary = "A demo", Description = "A long description")]
         [OpenApiRequestBody("application/json", typeof(InfoRequest))]
         [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string))]
+        [OpenApiResponseWithoutBody(HttpStatusCode.BadRequest, Description = "No idea what you're saying!")]
         [Function("HttpTrigger")]       
         public static HttpResponseData Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req,
             FunctionContext executionContext)
@@ -24,6 +25,11 @@ namespace net50
             using var reader = new JsonTextReader(sr);
             var serializer = new JsonSerializer();
             var info = serializer.Deserialize<InfoRequest>(reader);
+
+            if (info == null)
+            {
+                return req.CreateResponse(HttpStatusCode.BadRequest);
+            }
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
