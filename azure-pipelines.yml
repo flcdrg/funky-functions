@@ -19,6 +19,20 @@ stages:
 
     steps:
     - task: UseDotNet@2
+      displayName: 'Use .NET 3.1'
+      inputs:
+        packageType: sdk
+        version: 3.1.x
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: UseDotNet@2
+      displayName: 'Use .NET 5.0'
+      inputs:
+        packageType: sdk
+        version: 5.0.x
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: UseDotNet@2
       displayName: 'Use .NET 6 Preview'
       inputs:
         packageType: sdk
