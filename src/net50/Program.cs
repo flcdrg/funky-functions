@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Functions.Worker.Configuration;
 
@@ -11,6 +11,7 @@ namespace net50
         {
             var host = new HostBuilder()
                 .ConfigureFunctionsWorkerDefaults()
+                .ConfigureOpenApi()
                 .Build();
 
             host.Run();

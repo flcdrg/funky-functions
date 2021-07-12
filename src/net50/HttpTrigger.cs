@@ -2,6 +2,7 @@ using System.IO;
 using System.Net;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -9,7 +10,10 @@ namespace net50
 {
     public static class HttpTrigger
     {
-        [Function("HttpTrigger")]
+        [OpenApiOperation("demo", "demo", Summary = "A demo", Description = "A long description")]
+        [OpenApiRequestBody("application/json", typeof(InfoRequest))]
+        [OpenApiResponseWithBody(HttpStatusCode.OK, "text/plain", typeof(string))]
+        [Function("HttpTrigger")]       
         public static HttpResponseData Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req,
             FunctionContext executionContext)
         {
