@@ -75,25 +75,25 @@ jobs:
 
       steps:
       - name: Download net3.1
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: net3.1
           path: net3.1
 
       - name: Download net5
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: net5
           path: net5
 
       - name: Download net6 in-process
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: net6in
           path: net6in
 
       - name: Download net6 out-of-process
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: net6out
           path: net6out
